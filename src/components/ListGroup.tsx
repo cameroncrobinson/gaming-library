@@ -1,17 +1,33 @@
-import { Fragment } from "react/jsx-runtime";
+import { useState } from "react";
+interface ListGroupProps {
+  items: string[];
+  heading: string;
+}
+function ListGroup(props: ListGroupProps) {
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
-function ListGroup() {
   return (
-    <Fragment>
-        <h1>List</h1>
-        <ul className="list-group">
-          <li className="list-group-item">Cras justo odio</li>
-          <li className="list-group-item">Dapibus ac facilisis in</li>
-          <li className="list-group-item">Morbi leo risus</li>
-          <li className="list-group-item">Porta ac consectetur ac</li>
-          <li className="list-group-item">Vestibulum at eros</li>
-        </ul>
-    </Fragment>
+    <>
+      <h1>List</h1>
+      {props.items.length === 0 && <p>No items found!</p>}
+      <ul className="list-group">
+        {props.items.map((item, index) => (
+          <li
+            className={
+              index === selectedIndex
+                ? "active && list-group-item"
+                : "list-group-item"
+            }
+            key={item}
+            onClick={() => {
+              setSelectedIndex(index);
+            }}
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
 
